@@ -1,11 +1,9 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {Button, Gap, Header, Link} from '../../components';
 import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
-import {colors, fonts, storeData} from '../../utils';
+import {colors, fonts, showError, storeData} from '../../utils';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {showMessage} from 'react-native-flash-message';
 import {ref, update} from 'firebase/database';
 import {database} from '../../firebase.config';
 
@@ -27,12 +25,7 @@ export default function UploadFoto({navigation, route}) {
       response => {
         console.log('response : ', response);
         if (response.didCancel || response.error) {
-          showMessage({
-            message: 'Tidak memilih foto',
-            type: 'default',
-            backgroundColor: colors.errorMessage,
-            color: colors.white,
-          });
+          showError('Tidak memilih foto');
         } else {
           console.log('respons getImage: ', response);
           const source = {uri: response.assets[0].uri};

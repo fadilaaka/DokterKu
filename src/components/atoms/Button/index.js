@@ -5,8 +5,8 @@ import OnlyIcon from './OnlyIcon';
 import BtnIconSend from './BtnIconSend';
 
 export default function Button({type, title, onPress, icon, disable}) {
-  if (type === 'btn-icon') {
-    return <BtnIconSend disable={disable} />;
+  if (type === 'btn-icon-send') {
+    return <BtnIconSend disable={disable} onPress={onPress} />;
   }
   if (type === 'icon-only') {
     return <OnlyIcon icon={icon} onPress={onPress} />;

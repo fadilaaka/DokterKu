@@ -7,8 +7,8 @@ import {onAuthStateChanged} from 'firebase/auth';
 
 export default function Splash({navigation}) {
   useEffect(() => {
-    setTimeout(() => {
-      onAuthStateChanged(auth, user => {
+    const noTumpangTindih = onAuthStateChanged(auth, user => {
+      setTimeout(() => {
         if (user) {
           //lagi login
           console.log('user : ', user);
@@ -17,9 +17,9 @@ export default function Splash({navigation}) {
           //user logout
           navigation.replace('GetStarted');
         }
-      });
-      navigation.replace('GetStarted');
-    }, 3000);
+      }, 3000);
+    });
+    return () => noTumpangTindih();
   }, [navigation]);
   return (
     <View style={styles.page}>

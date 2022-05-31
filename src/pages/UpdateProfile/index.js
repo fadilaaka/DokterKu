@@ -1,10 +1,9 @@
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Button, Gap, Header, Input, Profile} from '../../components';
-import {colors, getData, storeData} from '../../utils';
-import {set, ref, update} from 'firebase/database';
+import {colors, getData, showError, storeData} from '../../utils';
+import {ref, update} from 'firebase/database';
 import {auth, database} from '../../firebase.config';
-import {showMessage} from 'react-native-flash-message';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {ILNullPhoto} from '../../assets';
 import {onAuthStateChanged, updatePassword} from 'firebase/auth';
@@ -33,12 +32,7 @@ export default function UpdateProfile({navigation}) {
 
     if (password.length > 0) {
       if (password.length < 6) {
-        showMessage({
-          message: 'Password kurang dari 6 karakter',
-          type: 'default',
-          backgroundColor: colors.errorMessage,
-          color: colors.white,
-        });
+        showError('Password kurang dari 6 karakter');
       } else {
         // Update Password
         updatePasswordChange();
@@ -54,18 +48,13 @@ export default function UpdateProfile({navigation}) {
   const updateProfileData = () => {
     const data = profile;
     data.photo = photoToDB;
-    update(ref(database, `users/${profile.uid}/`), data)
+    update(ref(database, `doctors/${profile.uid}/data`), data)
       .then(() => {
         console.log('updated : ', data);
         storeData('user', data);
       })
       .catch(error => {
-        showMessage({
-          message: error.message,
-          type: 'default',
-          backgroundColor: colors.errorMessage,
-          color: colors.white,
-        });
+        showError(error.code);
       });
   };
 
@@ -77,12 +66,7 @@ export default function UpdateProfile({navigation}) {
             console.log('Password Updated : ', success);
           })
           .catch(error => {
-            showMessage({
-              message: error.code,
-              type: 'default',
-              backgroundColor: colors.errorMessage,
-              color: colors.white,
-            });
+            showError(error.code);
           });
       }
     });
@@ -107,12 +91,7 @@ export default function UpdateProfile({navigation}) {
       response => {
         console.log('response : ', response);
         if (response.didCancel || response.error) {
-          showMessage({
-            message: 'Tidak memilih foto',
-            type: 'default',
-            backgroundColor: colors.errorMessage,
-            color: colors.white,
-          });
+          showError('Tidak memilih foto');
         } else {
           console.log('respons getImage: ', response);
           const source = {uri: response.assets[0].uri};

@@ -1,11 +1,10 @@
 import {StyleSheet, View, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Gap, Header, List, Profile} from '../../components';
-import {colors, getData} from '../../utils';
+import {colors, getData, showError} from '../../utils';
 import {ILNullPhoto} from '../../assets';
 import {signOut} from 'firebase/auth';
 import {auth} from '../../firebase.config';
-import {showMessage} from 'react-native-flash-message';
 
 export default function UserProfile({navigation}) {
   const [profile, setProfile] = useState({
@@ -28,12 +27,7 @@ export default function UserProfile({navigation}) {
         navigation.replace('GetStarted');
       })
       .catch(error => {
-        showMessage({
-          message: error.code,
-          type: 'default',
-          backgroundColor: colors.errorMessage,
-          color: colors.white,
-        });
+        showError(error.code);
       });
   };
 
