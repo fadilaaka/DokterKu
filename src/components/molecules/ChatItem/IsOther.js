@@ -1,19 +1,16 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import {colors, fonts} from '../../../utils';
-import {DummyDokter2} from '../../../assets';
 
-export default function IsOther() {
+export default function IsOther({text, date, photo}) {
   return (
     <View style={styles.container}>
-      <Image source={DummyDokter2} style={styles.avatar} />
+      <Image source={photo} style={styles.avatar} />
       <View>
         <View style={styles.chatContent}>
-          <Text style={styles.text}>
-            Boleh ibu silahkan, ada yang bisa saya bantu?
-          </Text>
+          <Text style={styles.text}>{text}</Text>
         </View>
-        <Text style={styles.date}>5.21 PM</Text>
+        <Text style={styles.date}>{date}</Text>
       </View>
     </View>
   );

@@ -2,15 +2,13 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {colors, fonts} from '../../../utils';
 
-export default function IsMe() {
+export default function IsMe({text, date}) {
   return (
     <View style={styles.container}>
       <View style={styles.chatContent}>
-        <Text style={styles.text}>
-          Selamat siang pak dokter, boleh saya konsultasi?
-        </Text>
+        <Text style={styles.text}>{text}</Text>
       </View>
-      <Text style={styles.date}>5.20 PM</Text>
+      <Text style={styles.date}>{date}</Text>
     </View>
   );
 }
